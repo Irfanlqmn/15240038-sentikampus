@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: analisis-sentimen-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/models:/app/models
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: analisis-sentimen-web
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
