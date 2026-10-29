@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,14 +33,19 @@ class SentimenHome extends StatefulWidget {
 
 class _SentimenHomeState extends State<SentimenHome> {
   final TextEditingController komentarController = TextEditingController();
-  static const String _apiUrl = 'http://localhost:8000';
+  static const String _apiUrl =
+    'https://15240038-sentikampus-api.vercel.app';
 
   String _emote(String label) {
     switch (label.toLowerCase()) {
-      case 'positive': return '😊';
-      case 'negative': return '😞';
-      case 'neutral':  return '😐';
-      default:         return '🤔';
+      case 'positive':
+        return '😊';
+      case 'negative':
+        return '😞';
+      case 'neutral':
+        return '😐';
+      default:
+        return '🤔';
     }
   }
 
@@ -66,8 +72,9 @@ class _SentimenHomeState extends State<SentimenHome> {
     setState(() {
       loading = true;
       error = null;
+      hasilLabel = '';
+      hasilScore = null;
     });
-
     try {
       final url = Uri.parse('$_apiUrl/api/v1/predict');
       final response = await http.post(
@@ -165,7 +172,9 @@ class _SentimenHomeState extends State<SentimenHome> {
                         ),
                       ),
                       if (hasilScore != null)
-                        Text('Skor model: ${(hasilScore! * 100).toStringAsFixed(2)}%'),
+                        Text(
+                          'Skor model: ${(hasilScore! * 100).toStringAsFixed(2)}%',
+                        ),
                     ],
                   ),
                 ),
